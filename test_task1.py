@@ -56,7 +56,7 @@ class Rectangle(Shape):
         return self.side1 * self.side2
 
 
-def get_shape_by_description(text: str): #хочу передати саме рядок
+def get_shape_by_description(text: str):
     parts = text.split()
     if parts[0] == "Circle":
         radius = float(parts[5])
@@ -86,7 +86,7 @@ class TestShapes(unittest.TestCase):
         text = "Circle Center 1 1 Radius 2"
         shape = get_shape_by_description(text)
         self.assertEqual(shape.get_name(), "Circle")
-        self.assertAlmostEqual(shape.get_perimetr(), 12.56637, 5) # має бути рівним цьому числу з точністю до 5 знаків
+        self.assertAlmostEqual(shape.get_perimetr(), 12.56637, 5) 
         self.assertAlmostEqual(shape.get_area(), 25.13274, 5)
 
     def test_square(self):
@@ -103,7 +103,7 @@ class TestShapes(unittest.TestCase):
 
 def main():
     print("Please enter the shape description:")
-    input_text = sys.stdin.readline().strip() #сист.бібл..станд.інпут..читаєрядок..видаляєпробіли
+    input_text = sys.stdin.readline().strip() 
     print(get_result_text(input_text))
 
 main()
