@@ -70,7 +70,8 @@ def get_shape_by_description(text: str):
         shape = Square(side)
     else:
         return f'Unknown shape type: {parts[0]}'
-    return shape # для тестів, щоб перевіти, що вона повертає
+    return shape
+    
 
 def get_result_text(text: str):
     shape = get_shape_by_description(text)
