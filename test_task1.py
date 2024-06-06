@@ -30,19 +30,6 @@ class Circle(Shape):
     def get_area(self):
         return 2 * math.pi * (self.radius ** 2)
 
-
-class Square(Shape):
-    def __init__(self, side):
-        self.name = "Square"
-        self.side = side
-
-    def get_perimetr(self):
-        return 4 * self.side
-
-    def get_area(self):
-        return self.side * self.side
-
-
 class Rectangle(Shape):
     def __init__(self, side1, side2):
         self.name = "Rectangle"
@@ -56,7 +43,14 @@ class Rectangle(Shape):
         return self.side1 * self.side2
 
 
-def get_shape_by_description(text: str):
+class Square(Rectangle):
+    def __init__(self, side):
+        super().__init__(side, side)
+        self.name = "Square"
+
+
+
+def get_shape_by_description(text: str): #хочу передати саме рядок
     parts = text.split()
     if parts[0] == "Circle":
         radius = float(parts[5])
@@ -70,8 +64,7 @@ def get_shape_by_description(text: str):
         shape = Square(side)
     else:
         return f'Unknown shape type: {parts[0]}'
-    return shape
-    
+    return shape # для тестів, щоб перевіти, що вона повертає
 
 def get_result_text(text: str):
     shape = get_shape_by_description(text)
@@ -87,7 +80,7 @@ class TestShapes(unittest.TestCase):
         text = "Circle Center 1 1 Radius 2"
         shape = get_shape_by_description(text)
         self.assertEqual(shape.get_name(), "Circle")
-        self.assertAlmostEqual(shape.get_perimetr(), 12.56637, 5) 
+        self.assertAlmostEqual(shape.get_perimetr(), 12.56637, 5) # має бути рівним цьому числу з точністю до 5 знаків
         self.assertAlmostEqual(shape.get_area(), 25.13274, 5)
 
     def test_square(self):
@@ -102,13 +95,31 @@ class TestShapes(unittest.TestCase):
         expected_output = "Rectangle perimetr 4.0 area 1.0"
         self.assertEqual(result, expected_output)
 
+    def test_rectangle_objact(self):
+        text = "Rectangle TopRight 2 2 BottomLeft 1 1"
+        shape = get_shape_by_description(text)
+        self.assertEqual(shape.get_name(), "Rectangle")
+        self.assertEqual(shape.side1, 1 )
+        self.assertEqual(shape.side2, 1 )
+        self.assertAlmostEqual(shape.get_perimetr(), 4.0 )
+        self.assertAlmostEqual(shape.get_area(),1.0 )
+
+    def test_square_objact(self):
+        text = "Square TopRight 1 1 Side 1"
+        shape = get_shape_by_description(text)
+        self.assertEqual(shape.get_name(), "Square")
+        self.assertEqual(shape.side1, 1 )
+        self.assertEqual(shape.side2, 1 )
+        self.assertAlmostEqual(shape.get_perimetr(), 4.0 )
+        self.assertAlmostEqual(shape.get_area(),1.0 )
+
+
 def main():
     print("Please enter the shape description:")
-    input_text = sys.stdin.readline().strip() 
+    input_text = sys.stdin.readline().strip() #сист.бібл..станд.інпут..читаєрядок..видаляєпробіли
     print(get_result_text(input_text))
 
-main()
 
-#if __name__ == "__main__":
+if __name__ == "__main__":
     #main()
-    # unittest.main()
+    unittest.main()
